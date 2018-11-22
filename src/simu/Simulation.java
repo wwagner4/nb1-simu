@@ -24,7 +24,7 @@ public class Simulation implements Runnable {
     }
     
     @Override
-    public void run() {
+    public synchronized void run() {
         int maxw = canvas.getWidth();
         int maxh = canvas.getHeight();
         ArrayList<Obj> objects = new ArrayList<>();
@@ -36,12 +36,18 @@ public class Simulation implements Runnable {
         objects.add(new RoundObj(maxw / 2, maxh / 2));
         objects.add(new RoundObj(maxw / 2, maxh / 2));
         canvas.setObjects(objects);
+        
+        int cnt = 0;
 
         while (true) {
             try {
+                if (cnt % 100 == 0) {
+                    System.out.println("cnt: " + cnt);
+                }
                 moveObjects(objects);
                 canvas.repaint();
-                Thread.sleep(100);
+                wait(100);
+                cnt++;
             } catch (InterruptedException ex) {
                 // Nothing to do
             }
