@@ -11,23 +11,13 @@ public class Simulation implements Runnable {
 
     private SimulationPanel canvas;
     private final Random ran = new Random();
-
-
+    int cnt = 0;
+    ArrayList<Obj> objects = new ArrayList<>();
 
     public void setCanvas(SimulationPanel canvas) {
         this.canvas = canvas;
-    }
-    
-    
-    int ranVal(int maxVal) {
-        return ran.nextInt(maxVal - 600);
-    }
-    
-    @Override
-    public synchronized void run() {
         int maxw = canvas.getWidth();
         int maxh = canvas.getHeight();
-        ArrayList<Obj> objects = new ArrayList<>();
         objects.add(new RoundObj(maxw / 2, maxh / 2));
         objects.add(new RoundObj(maxw / 2, maxh / 2));
         objects.add(new RoundObj(maxw / 2, maxh / 2));
@@ -36,23 +26,34 @@ public class Simulation implements Runnable {
         objects.add(new RoundObj(maxw / 2, maxh / 2));
         objects.add(new RoundObj(maxw / 2, maxh / 2));
         canvas.setObjects(objects);
-        
-        int cnt = 0;
+    }
+
+    int ranVal(int maxVal) {
+        return ran.nextInt(maxVal - 600);
+    }
+
+    @Override
+    public synchronized void run() {
 
         while (true) {
-            try {
-                if (cnt % 10 == 0) {
-                    System.out.println("cnt: " + cnt);
-                }
-                moveObjects(objects);
-                canvas.repaint();
-                wait(100);
-                cnt++;
-            } catch (InterruptedException ex) {
-                // Nothing to do
-            }
+            takeStep();
         }
     }
+
+    public void takeStep() {
+        try {
+            if (cnt % 10 == 0) {
+                System.out.println("cnt: " + cnt);
+            }
+            moveObjects(objects);
+            canvas.repaint();
+            wait(100);
+            cnt++;
+        } catch (InterruptedException ex) {
+            // Nothing to do
+        }
+    }
+
     private void moveObjects(ArrayList<Obj> objects) {
         for (Obj object : objects) {
             move(object);
@@ -65,6 +66,5 @@ public class Simulation implements Runnable {
         object.setX(object.getX() + dx);
         object.setY(object.getY() + dy);
     }
-
 
 }
