@@ -41,7 +41,7 @@ public class Simulation implements Runnable {
 
         while (true) {
             try {
-                if (cnt % 100 == 0) {
+                if (cnt % 10 == 0) {
                     System.out.println("cnt: " + cnt);
                 }
                 moveObjects(objects);

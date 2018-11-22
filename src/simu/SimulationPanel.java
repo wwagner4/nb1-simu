@@ -2,12 +2,13 @@ package simu;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 
 public class SimulationPanel extends JPanel{
     
-    private List<Obj> objects;
+    private List<Obj> objects = new ArrayList<>();
 
     public void setObjects(List<Obj> objects) {
         this.objects = objects;
