@@ -10,6 +10,7 @@ public class RoundObj extends Obj {
         super(x, y);
     }
 
+    @Override
     public void paint(Graphics2D g) {
         g.fillOval(getX() - WIDTH, getY()- WIDTH, WIDTH * 2, WIDTH * 2);
     }
