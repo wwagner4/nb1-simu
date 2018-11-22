@@ -10,7 +10,7 @@ import java.util.Random;
 public class Simulation implements Runnable {
 
     private SimulationPanel canvas;
-    private Random ran = new Random();
+    private final Random ran = new Random();
 
 
 
