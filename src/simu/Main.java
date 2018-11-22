@@ -1,5 +1,9 @@
 package simu;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -14,8 +18,9 @@ public class Main {
         Simulation sim = new Simulation();
         sim.setCanvas(frame.getCanvas());
 
-        final Thread t = new Thread(sim);
-        t.start();
+        
+        final ScheduledExecutorService sched = Executors.newScheduledThreadPool(20);
+        sched.scheduleAtFixedRate(sim, 100, 10, TimeUnit.MILLISECONDS);
     }
 
 }

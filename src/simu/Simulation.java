@@ -2,6 +2,9 @@ package simu;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -18,13 +21,10 @@ public class Simulation implements Runnable {
         this.canvas = canvas;
         int maxw = canvas.getWidth();
         int maxh = canvas.getHeight();
-        objects.add(new RoundObj(maxw / 2, maxh / 2));
-        objects.add(new RoundObj(maxw / 2, maxh / 2));
-        objects.add(new RoundObj(maxw / 2, maxh / 2));
-        objects.add(new RoundObj(maxw / 2, maxh / 2));
-        objects.add(new RoundObj(maxw / 2, maxh / 2));
-        objects.add(new RoundObj(maxw / 2, maxh / 2));
-        objects.add(new RoundObj(maxw / 2, maxh / 2));
+        for (int i = 0; i < 100000; i++) {
+            //objects.add(new RoundObj(maxw / 2, maxh / 2));
+            objects.add(new RectObj(maxw / 2, maxh / 2));
+        }
         canvas.setObjects(objects);
     }
 
@@ -33,25 +33,17 @@ public class Simulation implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
-
-        while (true) {
-            takeStep();
-        }
+    public void run() {
+        takeStep();
     }
 
     public void takeStep() {
-        try {
-            if (cnt % 10 == 0) {
-                System.out.println("cnt: " + cnt);
-            }
-            moveObjects(objects);
-            canvas.repaint();
-            wait(100);
-            cnt++;
-        } catch (InterruptedException ex) {
-            // Nothing to do
+        if (cnt % 1000 == 0) {
+            System.out.println("step " + cnt);
         }
+        moveObjects(objects);
+        canvas.repaint();
+        cnt++;
     }
 
     private void moveObjects(ArrayList<Obj> objects) {
@@ -60,9 +52,11 @@ public class Simulation implements Runnable {
         }
     }
 
+    private static final int DIST = 2;
+
     private void move(Obj object) {
-        int dx = ran.nextInt(11) - 5;
-        int dy = ran.nextInt(11) - 5;
+        int dx = ran.nextInt(2 * DIST + 1) - DIST;
+        int dy = ran.nextInt(2 * DIST + 1) - DIST;
         object.setX(object.getX() + dx);
         object.setY(object.getY() + dy);
     }
