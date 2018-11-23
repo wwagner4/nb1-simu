@@ -2,9 +2,6 @@ package simu;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -21,7 +18,7 @@ public class Simulation implements Runnable {
         this.canvas = canvas;
         int maxw = canvas.getWidth();
         int maxh = canvas.getHeight();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 10000; i++) {
             //objects.add(new RoundObj(maxw / 2, maxh / 2));
             objects.add(new RectObj(maxw / 2, maxh / 2));
         }
@@ -37,7 +34,7 @@ public class Simulation implements Runnable {
         takeStep();
     }
 
-    public void takeStep() {
+    public synchronized void takeStep() {
         if (cnt % 1000 == 0) {
             System.out.println("step " + cnt);
         }
