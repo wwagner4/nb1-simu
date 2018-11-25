@@ -18,7 +18,7 @@ public class Simulation implements Runnable {
         this.canvas = canvas;
         int maxw = canvas.getWidth();
         int maxh = canvas.getHeight();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1500; i++) {
             if (ran.nextBoolean()) {
                 objects.add(new RoundObj(maxw / 2, maxh / 2, Direction.EAST, ran));
             } else {
@@ -61,7 +61,7 @@ public class Simulation implements Runnable {
     }
 
     private void changeDirection(Obj object) {
-        if (ran.nextInt(1000) > 990) {
+        if (ran.nextInt(10000) > 9920) {
            doChangeDirection(object);
         } 
     }

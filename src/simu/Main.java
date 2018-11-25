@@ -12,7 +12,6 @@ public class Main {
         frame.setTitle("nb1 simu");
         frame.setLocation(100, 100);
         frame.setSize(1500, 1000);
-        frame.setResizable(false); 
         frame.setVisible(true);
 
         Simulation sim = new Simulation();
@@ -20,7 +19,7 @@ public class Main {
 
         
         final ScheduledExecutorService sched = Executors.newScheduledThreadPool(20);
-        sched.scheduleAtFixedRate(sim, 100, 50, TimeUnit.MILLISECONDS);
+        sched.scheduleAtFixedRate(sim, 0, 20, TimeUnit.MILLISECONDS);
     }
 
 }

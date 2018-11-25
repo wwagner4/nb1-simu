@@ -1,6 +1,8 @@
 package simu;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 public abstract class Obj {
 
@@ -39,5 +41,9 @@ public abstract class Obj {
     }
 
     public abstract void paint(Graphics2D g, int time);
+
+    Color color(Random ran) {
+        return new Color(ran.nextInt(256), ran.nextInt(256), ran.nextInt(256));
+    }
 
 }
