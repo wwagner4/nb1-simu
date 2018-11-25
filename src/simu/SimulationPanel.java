@@ -2,23 +2,23 @@ package simu;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JPanel;
 
 public class SimulationPanel extends JPanel{
     
-    private List<Obj> objects = new ArrayList<>();
+    private Simulation  sim;
 
-    public void setObjects(List<Obj> objects) {
-        this.objects = objects;
+    public void setSim(Simulation sim) {
+        this.sim = sim;
     }
-
+    
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        for (Obj object : objects) {
-            object.paint((Graphics2D) g);
+        if (this.sim != null) {
+        for (Obj object : sim.objects) {
+            object.paint((Graphics2D) g, sim.cnt);
+        }
         }
     }
     

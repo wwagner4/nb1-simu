@@ -2,9 +2,6 @@ package simu;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -21,11 +18,14 @@ public class Simulation implements Runnable {
         this.canvas = canvas;
         int maxw = canvas.getWidth();
         int maxh = canvas.getHeight();
-        for (int i = 0; i < 100000; i++) {
-            //objects.add(new RoundObj(maxw / 2, maxh / 2));
-            objects.add(new RectObj(maxw / 2, maxh / 2));
+        for (int i = 0; i < 1000; i++) {
+            if (ran.nextBoolean()) {
+                objects.add(new RoundObj(maxw / 2, maxh / 2, Direction.EAST, ran));
+            } else {
+                objects.add(new RectObj(maxw / 2, maxh / 2, Direction.WEST, ran));
+            }
         }
-        canvas.setObjects(objects);
+        canvas.setSim(this);
     }
 
     int ranVal(int maxVal) {
@@ -34,10 +34,6 @@ public class Simulation implements Runnable {
 
     @Override
     public void run() {
-        takeStep();
-    }
-
-    public void takeStep() {
         if (cnt % 1000 == 0) {
             System.out.println("step " + cnt);
         }
@@ -52,13 +48,48 @@ public class Simulation implements Runnable {
         }
     }
 
-    private static final int DIST = 2;
+    private static final int DIST = 1;
 
     private void move(Obj object) {
-        int dx = ran.nextInt(2 * DIST + 1) - DIST;
-        int dy = ran.nextInt(2 * DIST + 1) - DIST;
-        object.setX(object.getX() + dx);
-        object.setY(object.getY() + dy);
+        changeDirection(object);
+        switch (object.getDirection()) {
+            case NORTH: object.setY(object.getY() + DIST); break;
+            case EAST: object.setX(object.getX() + DIST); break;
+            case SOUTH: object.setY(object.getY() - DIST); break;
+            case WEST: object.setX(object.getX() - DIST); break;
+        }
+    }
+
+    private void changeDirection(Obj object) {
+        if (ran.nextInt(1000) > 990) {
+           doChangeDirection(object);
+        } 
+    }
+
+    private void doChangeDirection(Obj object) {
+        if (ran.nextBoolean()) {
+            turnRight(object);
+        } else {
+            turnLeft(object);
+        }
+    }
+
+    private void turnRight(Obj object) {
+        switch (object.getDirection()) {
+            case NORTH: object.setDirection(Direction.EAST); break;
+            case EAST: object.setDirection(Direction.SOUTH); break;
+            case SOUTH: object.setDirection(Direction.WEST); break;
+            case WEST: object.setDirection(Direction.NORTH); break;
+        }
+    }
+
+    private void turnLeft(Obj object) {
+        switch (object.getDirection()) {
+            case NORTH: object.setDirection(Direction.WEST); break;
+            case EAST: object.setDirection(Direction.NORTH); break;
+            case SOUTH: object.setDirection(Direction.EAST); break;
+            case WEST: object.setDirection(Direction.SOUTH); break;
+        }
     }
 
 }

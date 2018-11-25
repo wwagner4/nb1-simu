@@ -20,7 +20,7 @@ public class Main {
 
         
         final ScheduledExecutorService sched = Executors.newScheduledThreadPool(20);
-        sched.scheduleAtFixedRate(sim, 100, 10, TimeUnit.MILLISECONDS);
+        sched.scheduleAtFixedRate(sim, 100, 50, TimeUnit.MILLISECONDS);
     }
 
 }
